@@ -46,7 +46,7 @@ import biosppy
 from biosppy.signals.ecg import ecg
 
 # Local imports/pyHRV toolbox imports
-import pyhrv
+import _pyhrv
 
 
 def nni_parameters(nni=None, rpeaks=None):
@@ -80,7 +80,7 @@ def nni_parameters(nni=None, rpeaks=None):
 
 	"""
 	# Check input
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# output
 	args = (int(nn.size), nn.mean(), nn.min(), nn.max())
@@ -117,10 +117,10 @@ def nni_differences_parameters(nni=None, rpeaks=None):
 
 	"""
 	# Check input
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Get NN interval differences
-	nnd = pyhrv.tools.nni_diff(nn)
+	nnd = _pyhrv.tools.nni_diff(nn)
 
 	# output
 	args = (float(nnd.mean()), int(nnd.min()), int(nnd.max()), )
@@ -159,10 +159,10 @@ def hr_parameters(nni=None, rpeaks=None):
 
 	"""
 	# Check input
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Get heart rate series
-	hr = pyhrv.tools.heart_rate(nn)
+	hr = _pyhrv.tools.heart_rate(nn)
 
 	# Output
 	args = (hr.mean(), hr.min(), hr.max(), hr.std(ddof=1))
@@ -198,10 +198,10 @@ def sdnn(nni=None, rpeaks=None):
 
 	"""
 	# Check input
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Computation of SDNN & Output
-	args = [pyhrv.utils.std(nn)]
+	args = [_pyhrv.utils.std(nn)]
 	names = ['sdnn']
 	return biosppy.utils.ReturnTuple(args, names)
 
@@ -240,10 +240,10 @@ def sdnn_index(nni=None, rpeaks=None, full=True, duration=300, warn=True):
 
 	"""
 	# Check input
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Signal segmentation into 5 min segments
-	segments, seg = pyhrv.utils.segmentation(nn,  full=full, duration=duration, warn=warn)
+	segments, seg = _pyhrv.utils.segmentation(nn, full=full, duration=duration, warn=warn)
 
 	if seg:
 		sdnn_values = [sdnn(x)['sdnn'] for x in segments]
@@ -290,14 +290,14 @@ def sdann(nni=None, rpeaks=None, full=True, overlap=False, duration=300, warn=Tr
 
 	"""
 	# Check input
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Signal segmentation into 5 min segments
-	segments, seg = pyhrv.utils.segmentation(nn, full=full, duration=duration, warn=warn)
+	segments, seg = _pyhrv.utils.segmentation(nn, full=full, duration=duration, warn=warn)
 
 	if seg:
 		mean_values = [np.mean(x) for x in segments]
-		sdann_ = pyhrv.utils.std(mean_values)
+		sdann_ = _pyhrv.utils.std(mean_values)
 	else:
 		sdann_ = float('nan')
 		warnings.warn("Signal duration too short for SDANN computation.")
@@ -336,10 +336,10 @@ def rmssd(nni=None, rpeaks=None):
 
 	"""
 	# Check input
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Compute RMSSD
-	nnd = pyhrv.tools.nni_diff(nn)
+	nnd = _pyhrv.tools.nni_diff(nn)
 	rmssd_ = np.sum([x**2 for x in nnd])
 	rmssd_ = np.sqrt(1. / nnd.size * rmssd_)
 
@@ -377,13 +377,13 @@ def sdsd(nni=None, rpeaks=None):
 
 	"""
 	# Check input
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Compute NN differences
-	nnd = pyhrv.tools.nni_diff(nn)
+	nnd = _pyhrv.tools.nni_diff(nn)
 
 	# Computation of SDNN
-	sdsd_ = pyhrv.utils.std(nnd)
+	sdsd_ = _pyhrv.utils.std(nnd)
 
 	# Output
 	args = [sdsd_]
@@ -428,7 +428,7 @@ def nnXX(nni=None, rpeaks=None, threshold=None):
 
 	"""
 	# Check input
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Check threshold
 	if threshold is None:
@@ -437,7 +437,7 @@ def nnXX(nni=None, rpeaks=None, threshold=None):
 		raise ValueError("Invalid value for 'threshold'. Value must not be <= 0.")
 
 	# Count NN20
-	nnd = pyhrv.tools.nni_diff(nn)
+	nnd = _pyhrv.tools.nni_diff(nn)
 	nnxx = sum(i > threshold for i in nnd)
 	pnnxx = nnxx / len(nnd) * 100
 
@@ -577,7 +577,7 @@ def tinn(nni=None, rpeaks=None, binsize=7.8125, plot=True, show=True, figsize=No
 				  'malfunction of the function. This function will be reviewed over the next updates to solve this issue')
 
 	# Check input
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Get Histogram data (with or without histogram plot figure)
 	if plot:
@@ -722,7 +722,7 @@ def triangular_index(nni=None, rpeaks=None, binsize=7.8125, plot=True, show=True
 
 	"""
 	# Check input
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# If histogram should be plotted
 	if plot:
@@ -904,7 +904,7 @@ def geometrical_parameters(nni=None, rpeaks=None, binsize=7.815, plot=True, show
 	"""
 
 	# Check input
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Get Histogram data & plot (optional)
 	if plot:
@@ -1029,26 +1029,26 @@ def time_domain(nni=None,
 		raise TypeError('No input data provided. Please specify input data.')
 
 	# Get NNI series
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Call time domain functions & wrap results in a single biosppy.utils.ReturnTuple object
 	results = nni_parameters(nn)
-	results = pyhrv.utils.join_tuples(results, hr_parameters(nn))
-	results = pyhrv.utils.join_tuples(results, nni_differences_parameters(nn))
-	results = pyhrv.utils.join_tuples(results, sdnn(nn))
-	results = pyhrv.utils.join_tuples(results, sdnn_index(nn))
-	results = pyhrv.utils.join_tuples(results, sdann(nn))
-	results = pyhrv.utils.join_tuples(results, rmssd(nn))
-	results = pyhrv.utils.join_tuples(results, sdsd(nn))
-	results = pyhrv.utils.join_tuples(results, nn50(nn))
-	results = pyhrv.utils.join_tuples(results, nn20(nn))
+	results = _pyhrv.utils.join_tuples(results, hr_parameters(nn))
+	results = _pyhrv.utils.join_tuples(results, nni_differences_parameters(nn))
+	results = _pyhrv.utils.join_tuples(results, sdnn(nn))
+	results = _pyhrv.utils.join_tuples(results, sdnn_index(nn))
+	results = _pyhrv.utils.join_tuples(results, sdann(nn))
+	results = _pyhrv.utils.join_tuples(results, rmssd(nn))
+	results = _pyhrv.utils.join_tuples(results, sdsd(nn))
+	results = _pyhrv.utils.join_tuples(results, nn50(nn))
+	results = _pyhrv.utils.join_tuples(results, nn20(nn))
 
 	# Compute custom threshold if required
 	if threshold is not None and threshold not in [50, 20]:
-		results = pyhrv.utils.join_tuples(results, nnXX(nn, threshold=int(threshold)))
+		results = _pyhrv.utils.join_tuples(results, nnXX(nn, threshold=int(threshold)))
 
 	# Compute geometrical parameters
-	results = pyhrv.utils.join_tuples(results, geometrical_parameters(nn, plot=plot, show=show, binsize=binsize))
+	results = _pyhrv.utils.join_tuples(results, geometrical_parameters(nn, plot=plot, show=show, binsize=binsize))
 
 	# Output
 	return results
@@ -1059,7 +1059,7 @@ if __name__ == "__main__":
 	Example Script - HRV Time Domain Analysis
 	"""
 	# Load sample NNI series
-	nni = pyhrv.utils.load_sample_nni(series='long')
+	nni = _pyhrv.utils.load_sample_nni(series='long')
 
 	# Time Domain results
 	print("=========================")

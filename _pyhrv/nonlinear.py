@@ -46,7 +46,7 @@ import biosppy
 from biosppy.signals.ecg import ecg
 
 # Local imports/pyHRV toolbox imports
-import pyhrv
+import _pyhrv
 
 
 def poincare(nni=None,
@@ -105,7 +105,7 @@ def poincare(nni=None,
 
 	"""
 	# Check input values
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Prepare Poincaré data
 	x1 = np.asarray(nn[:-1])
@@ -221,7 +221,7 @@ def sample_entropy(nni=None, rpeaks=None, dim=2, tolerance=None):
 
 	"""
 	# Check input values
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	if tolerance is None:
 		tolerance = np.std(nn, ddof=-1) * 0.2
@@ -279,11 +279,11 @@ def dfa(nn=None, rpeaks=None, short=None, long=None, show=True, figsize=None, le
 
 	"""
 	# Check input values
-	nn = pyhrv.utils.check_input(nn, rpeaks)
+	nn = _pyhrv.utils.check_input(nn, rpeaks)
 
 	# Check intervals
-	short = pyhrv.utils.check_interval(short, default=(4, 16))
-	long = pyhrv.utils.check_interval(long, default=(17, 64))
+	short = _pyhrv.utils.check_interval(short, default=(4, 16))
+	long = _pyhrv.utils.check_interval(long, default=(17, 64))
 
 	# Create arrays
 	short = range(short[0], short[1] + 1)
@@ -445,7 +445,7 @@ def nonlinear(nni=None,
 		raise TypeError('No input data provided. Please specify input data.')
 
 	# Get NNI series
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Unwrap kwargs_poincare dictionary & compute Poincaré
 	if kwargs_poincare is not None:
@@ -538,7 +538,7 @@ def nonlinear(nni=None,
 		d_results = dfa(nn, show=False)
 
 	# Join Results
-	results = pyhrv.utils.join_tuples(p_results, s_results, d_results)
+	results = _pyhrv.utils.join_tuples(p_results, s_results, d_results)
 
 	# Plot
 	if show:
@@ -555,7 +555,7 @@ if __name__ == "__main__":
 	import numpy as np
 
 	# Load sample NNI series
-	nni = pyhrv.utils.load_sample_nni()
+	nni = _pyhrv.utils.load_sample_nni()
 
 	# Compute Poincaré
 	res1 = poincare(nni, show=False)
@@ -567,7 +567,7 @@ if __name__ == "__main__":
 	res3 = dfa(nni, show=False)
 
 	# Join results
-	results = pyhrv.utils.join_tuples(res1, res2, res3)
+	results = _pyhrv.utils.join_tuples(res1, res2, res3)
 
 	# Results
 	print("=========================")

@@ -42,17 +42,17 @@ import biosppy
 import matplotlib.pyplot as plt
 
 # Import toolbox functions
-import pyhrv
-import pyhrv.time_domain as td
-import pyhrv.frequency_domain as fd
-import pyhrv.nonlinear as nl
+import _pyhrv
+import _pyhrv.time_domain as td
+import _pyhrv.frequency_domain as fd
+import _pyhrv.nonlinear as nl
 try:
-	from pyhrv import tools
+	from _pyhrv import tools
 except ImportError as e:
 	pass
 
 try:
-	from pyhrv import utils
+	from _pyhrv import utils
 except ImportError as e:
 	pass
 
@@ -256,7 +256,7 @@ def hrv(nni=None,
 
 	nn = utils.check_input(nni, rpeaks)
 
-	version = biosppy.utils.ReturnTuple(('v.' + pyhrv.__version__, ), ('version', ))
+	version = biosppy.utils.ReturnTuple(('v.' + _pyhrv.__version__,), ('version',))
 
 	# COMPUTE TIME DOMAIN PARAMETERS
 	# Check for kwargs for the 'kwargs_time'
@@ -411,7 +411,7 @@ if __name__ == '__main__':
 	Example Script - Computing all HRV parameters of pyHRV
 	"""
 	# Import
-	from pyhrv import utils
+	from _pyhrv import utils
 
 	# Load sample NNI series of 60min
 	nni = utils.load_sample_nni(series="long")

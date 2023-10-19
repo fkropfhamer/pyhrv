@@ -56,7 +56,7 @@ from matplotlib import pyplot as plt
 import biosppy
 
 # Local imports/HRV toolbox imports
-import pyhrv
+import _pyhrv
 
 
 # Suppress Lapack bug 0038 warning from scipy (may occur with older versions of the packages above)
@@ -153,7 +153,7 @@ def welch_psd(nni=None,
 
 	"""
 	# Check input values
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Verify or set default frequency bands
 	fbands = _check_freq_bands(fbands)
@@ -207,7 +207,7 @@ def welch_psd(nni=None,
 		figure = biosppy.utils.ReturnTuple((figure, ), ('fft_plot', ))
 
 		# Output
-		return pyhrv.utils.join_tuples(params, figure, meta)
+		return _pyhrv.utils.join_tuples(params, figure, meta)
 
 	# Dev Mode:
 	# Returns frequency parameters and frequency & power series/array; does not create a plot figure nor plot the data
@@ -216,7 +216,7 @@ def welch_psd(nni=None,
 		params, _ = _compute_parameters('fft', frequencies, powers, fbands)
 
 		# Output
-		return pyhrv.utils.join_tuples(params, meta), frequencies, np.asarray((powers / 10 ** 6))
+		return _pyhrv.utils.join_tuples(params, meta), frequencies, np.asarray((powers / 10 ** 6))
 
 	# Devplot Mode:
 	# Returns frequency parameters, PSD plot figure, and frequency & power series/arrays
@@ -229,7 +229,7 @@ def welch_psd(nni=None,
 		figure = biosppy.utils.ReturnTuple((figure, ), ('fft_plot', ))
 
 		# Output
-		return pyhrv.utils.join_tuples(params, figure, meta), frequencies, np.asarray((powers / 10 ** 6))
+		return _pyhrv.utils.join_tuples(params, figure, meta), frequencies, np.asarray((powers / 10 ** 6))
 
 
 def lomb_psd(
@@ -321,7 +321,7 @@ def lomb_psd(
 
 	"""
 	# Check input
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Verify or set default frequency bands
 	fbands = _check_freq_bands(fbands)
@@ -363,7 +363,7 @@ def lomb_psd(
 		figure = biosppy.utils.ReturnTuple((figure, ), ('lomb_plot', ))
 
 		# Complete output
-		return pyhrv.utils.join_tuples(params, figure, meta)
+		return _pyhrv.utils.join_tuples(params, figure, meta)
 
 	# Dev Mode:
 	# Returns frequency parameters and frequency & power series/array; does not create a plot figure nor plot the data
@@ -372,7 +372,7 @@ def lomb_psd(
 		params, _ = _compute_parameters('lomb', frequencies, powers, fbands)
 
 		# Complete output
-		return pyhrv.utils.join_tuples(params, meta), frequencies, powers
+		return _pyhrv.utils.join_tuples(params, meta), frequencies, powers
 
 	# Devplot Mode:
 	# Returns frequency parameters, PSD plot figure, and frequency & power series/arrays
@@ -388,7 +388,7 @@ def lomb_psd(
 		figure = biosppy.utils.ReturnTuple((figure, ), ('lomb_plot', ))
 
 		# Complete output
-		return pyhrv.utils.join_tuples(params, figure, meta), frequencies, powers
+		return _pyhrv.utils.join_tuples(params, figure, meta), frequencies, powers
 
 
 def ar_psd(nni=None,
@@ -481,7 +481,7 @@ def ar_psd(nni=None,
 
 	"""
 	# Check input
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Verify or set default frequency bands
 	fbands = _check_freq_bands(fbands)
@@ -518,14 +518,14 @@ def ar_psd(nni=None,
 	if mode == 'normal':
 		# Compute frequency parameters
 		params, freq_i = _compute_parameters('ar', frequencies, powers, fbands)
-		params = pyhrv.utils.join_tuples(params, meta)
+		params = _pyhrv.utils.join_tuples(params, meta)
 
 		# Plot PSD
 		figure = _plot_psd('ar', frequencies, powers, freq_i, params, show, show_param, legend, figsize)
 		figure = biosppy.utils.ReturnTuple((figure, ), ('ar_plot', ))
 
 		# Complete output
-		return pyhrv.utils.join_tuples(params, figure)
+		return _pyhrv.utils.join_tuples(params, figure)
 
 	# Dev Mode:
 	# Returns frequency parameters and frequency & power series/array; does not create a plot figure nor plot the data
@@ -534,7 +534,7 @@ def ar_psd(nni=None,
 		params, _ = _compute_parameters('ar', frequencies, powers, fbands)
 
 		# Output
-		return pyhrv.utils.join_tuples(params, meta), frequencies, (powers / 10 ** 6)
+		return _pyhrv.utils.join_tuples(params, meta), frequencies, (powers / 10 ** 6)
 
 	# Devplot Mode:
 	# Returns frequency parameters, PSD plot figure, and frequency & power series/arrays
@@ -547,7 +547,7 @@ def ar_psd(nni=None,
 		figure = biosppy.utils.ReturnTuple((figure, ), ('ar_plot', ))
 
 		# Complete output
-		return pyhrv.utils.join_tuples(params, figure, meta), frequencies, (powers / 10 ** 6)
+		return _pyhrv.utils.join_tuples(params, figure, meta), frequencies, (powers / 10 ** 6)
 
 
 def _compute_parameters(method, frequencies, power, freq_bands):
@@ -988,9 +988,9 @@ def psd_comparison(nni=None,
 		Array containing pre-selected segments for the PSD computation in [ms] or [s]
 	method : string, optional
 		PSD estimation method (default: 'fft')
-			'welch' Welch's Method      pyhrv.frequency_domain.welch_psd()
-			'ar'    Autoregressive      pyhrv.frequency_domain.ar_psd()
-			'lomb'  Lomb-Scargle        pyhrv.frequency_domain.lomb_psd()
+			'welch' Welch's Method      _pyhrv.frequency_domain.welch_psd()
+			'ar'    Autoregressive      _pyhrv.frequency_domain.ar_psd()
+			'lomb'  Lomb-Scargle        _pyhrv.frequency_domain.lomb_psd()
 	fbands : dict, optional
 		Dictionary with frequency bands (2-element tuples or list)
 		Value format:	(lower_freq_band_boundary, upper_freq_band_boundary)
@@ -1048,8 +1048,8 @@ def psd_comparison(nni=None,
 	"""
 	# Check input values
 	if segments is None:
-		nn = pyhrv.utils.check_input(nni, rpeaks)
-		segments, worked = pyhrv.utils.segmentation(nn, full=False, duration=duration)
+		nn = _pyhrv.utils.check_input(nni, rpeaks)
+		segments, worked = _pyhrv.utils.segmentation(nn, full=False, duration=duration)
 	else:
 		# Remove duration in case a series of pre-selected segments are provided
 		duration = None
@@ -1077,7 +1077,7 @@ def psd_comparison(nni=None,
 		# Output
 		output = biosppy.utils.ReturnTuple((fig,), ('psd_comparison_plot',))
 		for i in range(len(psd_data)):
-			output = pyhrv.utils.join_tuples(biosppy.utils.ReturnTuple((psd_data[i]['params'],), ('seg%i' % i,)), output)
+			output = _pyhrv.utils.join_tuples(biosppy.utils.ReturnTuple((psd_data[i]['params'],), ('seg%i' % i,)), output)
 		return output
 
 
@@ -1090,9 +1090,9 @@ def _compute_psds(segments, method, fbands, kwargs={}):
 		Array containing the NN intervals of each segment
 	method : string, optional
 		PSD estimation method (default: 'fft')
-			'fft'   Welch's Method      pyhrv.frequency_domain.welch_psd()
-			'ar'    Autoregressive      pyhrv.frequency_domain.ar_psd()
-			'lomb'  Lomb-Scargle        pyhrv.frequency_domain.lomb_psd()
+			'fft'   Welch's Method      _pyhrv.frequency_domain.welch_psd()
+			'ar'    Autoregressive      _pyhrv.frequency_domain.ar_psd()
+			'lomb'  Lomb-Scargle        _pyhrv.frequency_domain.lomb_psd()
 	fbands : dict, optional
 		Dictionary with frequency bands (2-element tuples or list)
 		Value format:	(lower_freq_band_boundary, upper_freq_band_boundary)
@@ -1399,9 +1399,9 @@ def psd_waterfall(nni=None,
 	"""
 	# Check input values
 	if segments is None:
-		nn = pyhrv.utils.check_input(nni, rpeaks)
+		nn = _pyhrv.utils.check_input(nni, rpeaks)
 		y_unit_time = True
-		segments, worked = pyhrv.utils.segmentation(nn, duration=duration, full=False)
+		segments, worked = _pyhrv.utils.segmentation(nn, duration=duration, full=False)
 	else:
 		y_unit_time = False
 		worked = True
@@ -1660,7 +1660,7 @@ def psd_waterfall(nni=None,
 		# Wrap output
 		output = biosppy.utils.ReturnTuple((fig, ), ('psd_waterfall_plot', ))
 		for i in range(len(segment_parameters)):
-			output = pyhrv.utils.join_tuples(biosppy.utils.ReturnTuple((segment_parameters[i], ), ('seg%i' % i, )), output)
+			output = _pyhrv.utils.join_tuples(biosppy.utils.ReturnTuple((segment_parameters[i],), ('seg%i' % i,)), output)
 		return output
 
 
@@ -1785,7 +1785,7 @@ def frequency_domain(nni=None,
 		raise TypeError('No input data provided. Please specify input data.')
 
 	# Get NNI series
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Check for kwargs for the 'welch_psd' function and compute the PSD
 	if kwargs_welch is not None:
@@ -1882,7 +1882,7 @@ def frequency_domain(nni=None,
 		plt.show()
 
 	# Output
-	return pyhrv.utils.join_tuples(welch_results, lomb_results, ar_results)
+	return _pyhrv.utils.join_tuples(welch_results, lomb_results, ar_results)
 
 
 if __name__ == "__main__":
@@ -1891,7 +1891,7 @@ if __name__ == "__main__":
 
 	"""
 	# Load sample NNI series
-	nni = pyhrv.utils.load_sample_nni()
+	nni = _pyhrv.utils.load_sample_nni()
 
 	# Compute all frequency domain parameters and all methods
 	results = frequency_domain(nni=nni)

@@ -54,10 +54,10 @@ from matplotlib.projections import register_projection
 import biosppy
 
 # Local imports
-import pyhrv
-import pyhrv.time_domain
-import pyhrv.frequency_domain
-import pyhrv.nonlinear
+import _pyhrv
+import _pyhrv.time_domain
+import _pyhrv.frequency_domain
+import _pyhrv.nonlinear
 
 # Turn off toolbox triggered warnings
 warnings.filterwarnings('ignore', category=FutureWarning)
@@ -110,7 +110,7 @@ def nn_intervals(rpeaks=None):
 	for i in range(nn_int.size):
 		nn_int[i] = rpeaks[i + 1] - rpeaks[i]
 
-	return pyhrv.utils.nn_format(nn_int)
+	return _pyhrv.utils.nn_format(nn_int)
 
 
 def nni_diff(nni=None):
@@ -150,7 +150,7 @@ def nni_diff(nni=None):
 	elif all(isinstance(x, int) for x in nni) and all(isinstance(x, float) for x in nni):
 		raise TypeError("'nni' data contains non-int or non-float data.")
 	else:
-		nn = pyhrv.utils.nn_format(nni)
+		nn = _pyhrv.utils.nn_format(nni)
 
 	# Confirm numpy arrays & compute NN interval differences
 	nn_diff_ = np.zeros(nn.size - 1)
@@ -219,13 +219,13 @@ def plot_ecg(signal=None,
 
 	# Compute time vector
 	if t is None:
-		t = pyhrv.utils.time_vector(signal, sampling_rate=sampling_rate)
+		t = _pyhrv.utils.time_vector(signal, sampling_rate=sampling_rate)
 
 	# Configure interval of visualized signal
 	if interval == 'complete':
 		interval = [0, t[-1]]
 	else:
-		interval = pyhrv.utils.check_interval(interval, limits=[0, t[-1]], default=[0, 10])
+		interval = _pyhrv.utils.check_interval(interval, limits=[0, t[-1]], default=[0, 10])
 
 	# Prepare figure
 	if figsize is None:
@@ -363,7 +363,7 @@ def tachogram(nni=None,
 		raise TypeError('No input data provided. Please specify input data.')
 
 	# Get NNI series
-	nni = pyhrv.utils.check_input(nni, rpeaks)
+	nni = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Time vector back to ms
 	t = np.cumsum(nni) / 1000.
@@ -372,7 +372,7 @@ def tachogram(nni=None,
 	if interval == 'complete':
 		interval = [0, t[-1]]
 	else:
-		interval = pyhrv.utils.check_interval(interval, limits=[0, t[-1]], default=[0, 10])
+		interval = _pyhrv.utils.check_interval(interval, limits=[0, t[-1]], default=[0, 10])
 
 	# Prepare figure
 	if figsize is None:
@@ -491,7 +491,7 @@ def heart_rate(nni=None, rpeaks=None):
 	elif nni is not None:
 		# Use given NN intervals & confirm numpy if series of NN intervals is provided
 		if type(nni) is list or type(nni) is np.ndarray:
-			nni = pyhrv.utils.nn_format(nni) if len(nni) > 1 else nni[0]
+			nni = _pyhrv.utils.nn_format(nni) if len(nni) > 1 else nni[0]
 		elif type(nni) is int or float:
 			nni = int(nni) if nni > 10 else int(nni) / 1000
 	else:
@@ -569,12 +569,12 @@ def heart_rate_heatplot(nni=None,
 		raise TypeError('No input data provided. Please specify input data.')
 
 	# Get NNI series
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Compute HR data and
 	hr_data = heart_rate(nn)
 	t = np.cumsum(nn) / 1000
-	interval = pyhrv.utils.check_interval(interval, limits=[0, t[-1]], default=[0, t[-1]])
+	interval = _pyhrv.utils.check_interval(interval, limits=[0, t[-1]], default=[0, t[-1]])
 
 	# Prepare figure
 	if figsize is None:
@@ -714,7 +714,7 @@ def time_varying(nni=None, rpeaks=None, parameter='sdnn', window='n20', interpol
 
 	"""
 	# Check input series
-	nn = pyhrv.utils.check_input(nni, rpeaks)
+	nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	# Check if parameter is on the list of invalid parameters (computational time of these parameters are too long or
 	# the parameters are input parameters for PSD functions
@@ -726,7 +726,7 @@ def time_varying(nni=None, rpeaks=None, parameter='sdnn', window='n20', interpol
 		raise TypeError("No parameter set for 'parameter'")
 	elif parameter in invalid_parameters:
 		raise ValueError("Parameter '%s' is not supported by this function. Please select another one." % parameter)
-	elif parameter not in pyhrv.utils.load_hrv_keys_json().keys():
+	elif parameter not in _pyhrv.utils.load_hrv_keys_json().keys():
 		raise ValueError("Unknown parameter '%s' (not a pyHRV parameter)." % parameter)
 
 	# Check window and decode window configuration
@@ -763,7 +763,7 @@ def time_varying(nni=None, rpeaks=None, parameter='sdnn', window='n20', interpol
 	parameter_values = np.asarray([])
 
 	# Get hrv_keys & the respective function
-	hrv_keys = pyhrv.utils.load_hrv_keys_json()
+	hrv_keys = _pyhrv.utils.load_hrv_keys_json()
 	parameter_func = hrv_keys[parameter][-1]
 	parameter_label = hrv_keys[parameter][1]
 	parameter_unit = hrv_keys[parameter][2]
@@ -996,7 +996,7 @@ def radar_chart(nni=None,
 
 	"""
 	# Helper function & variables
-	para_func = pyhrv.utils.load_hrv_keys_json()
+	para_func = _pyhrv.utils.load_hrv_keys_json()
 	unknown_parameters, ref_params, comp_params = [], {}, {}
 
 	def _compute_parameter(nni_series, parameter):
@@ -1034,12 +1034,12 @@ def radar_chart(nni=None,
 	if nni is None and rpeaks is None:
 		raise TypeError("No input data provided for baseline or reference NNI. Please specify the reference NNI series.")
 	else:
-		nn = pyhrv.utils.check_input(nni, rpeaks)
+		nn = _pyhrv.utils.check_input(nni, rpeaks)
 
 	if comparison_nni is not None and comparison_rpeaks is not None:
 		raise TypeError("No input data provided for comparison NNI. Please specify the comarison NNI series.")
 	else:
-		comp_nn = pyhrv.utils.check_input(comparison_nni, comparison_rpeaks)
+		comp_nn = _pyhrv.utils.check_input(comparison_nni, comparison_rpeaks)
 
 	if parameters is None:
 		raise TypeError("No input list of parameters provided for 'parameters'. Please specify a list of the parameters"
@@ -1057,7 +1057,7 @@ def radar_chart(nni=None,
 							  "parameter has been removed from the parameter list." % p, stacklevel=2)
 
 	# Register projection of custom RadarAxes class
-	register_projection(pyhrv.utils.pyHRVRadarAxes)
+	register_projection(_pyhrv.utils.pyHRVRadarAxes)
 
 	# Check if the provided input parameter exists in pyHRV (hrv_keys.json) & compute available parameters
 	for p in parameters:
@@ -1216,7 +1216,7 @@ def hrv_export(results=None, path=None, efile=None, comment=None, plots=False):
 		path.close()
 		path = path_
 
-	efile, _ = pyhrv.utils.check_fname(path, 'json', efile)
+	efile, _ = _pyhrv.utils.check_fname(path, 'json', efile)
 
 	# Get HRV parameters
 	params = json.load(open(os.path.join(os.path.split(__file__)[0], './files/hrv_keys.json'), 'r'))
@@ -1296,11 +1296,11 @@ if __name__ == "__main__":
 	"""
 	Example Script - HRV Tools
 	"""
-	import pyhrv
+	import _pyhrv
 	from biosppy.signals.ecg import ecg
 
 	# Load a Sample Signal
-	nni = pyhrv.utils.load_sample_nni()
+	nni = _pyhrv.utils.load_sample_nni()
 	heart_rate_heatplot(nni)
 
 	# # Load OpenSignals (r)evolution ECG sample file
@@ -1338,7 +1338,7 @@ if __name__ == "__main__":
 	#
 	# # Export and import HRV results into and from JSON files:
 	# # First, compute hrv parameters
-	# results = pyhrv.hrv(nni, show=False)
+	# results = _pyhrv.hrv(nni, show=False)
 	#
 	# hrv_export(results, path='./files/', efile='SampleExport')
 	# hrv_import('./files/SampleExport.json')

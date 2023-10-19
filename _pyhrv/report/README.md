@@ -7,16 +7,16 @@ Follow the code example below to generate a .TXT report. An example report can b
 
 ```python
     # Imports
-    import pyhrv
+import _pyhrv
 
-    # Load 5 minute sample NNI series
-    nni = pyhrv.utils.load_sample_nni()
+# Load 5 minute sample NNI series
+nni = _pyhrv.utils.load_sample_nni()
 
-    # Compute HRV parameters (& hide
-    results = pyhrv.hrv(nni, show=False)
+# Compute HRV parameters (& hide
+results = _pyhrv.hrv(nni, show=False)
 
-    # Create HRV TXT report
-    pyhrv.report.hrv_report(results, path='./files/', rfile='SampleReport', file_format='txt')
+# Create HRV TXT report
+_pyhrv.report.hrv_report(results, path='./files/', rfile='SampleReport', file_format='txt')
 ```
 
 ## .CSV Report
@@ -24,16 +24,16 @@ Follow the code example below to generate a .CSV report. An example report can b
 
 ```python
     # Imports
-    import pyhrv
+import _pyhrv
 
-    # Load 5 minute sample NNI series
-    nni = pyhrv.utils.load_sample_nni()
+# Load 5 minute sample NNI series
+nni = _pyhrv.utils.load_sample_nni()
 
-    # Compute HRV parameters (& hide
-    results = pyhrv.hrv(nni, show=False)
+# Compute HRV parameters (& hide
+results = _pyhrv.hrv(nni, show=False)
 
-    # Create HRV CSV report
-    pyhrv.report.hrv_report(results, path='./files/', rfile='SampleReport', file_format='csv')
+# Create HRV CSV report
+_pyhrv.report.hrv_report(results, path='./files/', rfile='SampleReport', file_format='csv')
 ```
 
 ## .PDF Report
@@ -63,26 +63,26 @@ See the following example demonstrating how to compute the HRV parameters and to
 
 ```python
     # Imports
-    import pyhrv
+import _pyhrv
 
-    # Load 5 minute sample NNI series
-    nni = pyhrv.utils.load_sample_nni()
+# Load 5 minute sample NNI series
+nni = _pyhrv.utils.load_sample_nni()
 
-    # Compute HRV parameters (& hide
-    results = pyhrv.hrv(nni, show=False)
+# Compute HRV parameters (& hide
+results = _pyhrv.hrv(nni, show=False)
 
-    # Step 1: Create a PDFReport object and pass the ECG signal, NNI, or R-Peaks series and the results
-    report = pyhrv.report.PDFReport(nni=nni, results=results)
+# Step 1: Create a PDFReport object and pass the ECG signal, NNI, or R-Peaks series and the results
+report = _pyhrv.report.PDFReport(nni=nni, results=results)
 
-    # Step 2: Set general information about the acquisition
-    report.set_general_info(subject='Jon Doe',
-                            experiment='Sample Report',
-                            age=27,
-                            gender='male',
-                            comment='This is a sample comment in a sample report')
+# Step 2: Set general information about the acquisition
+report.set_general_info(subject='Jon Doe',
+                        experiment='Sample Report',
+                        age=27,
+                        gender='male',
+                        comment='This is a sample comment in a sample report')
 
-    # Step 3: Create the PDF report
-    report.create_report(terminal_output=True)
+# Step 3: Create the PDF report
+report.create_report(terminal_output=True)
 ```
 
 #### Create your own PDF report template

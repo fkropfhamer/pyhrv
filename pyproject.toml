@@ -1,0 +1,49 @@
+[project]
+name = "pyhrv"
+version = "2.0.0"
+description = "Python toolbox for Heart Rate Variability."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE.txt" }
+keywords=["Heart Rate Variability", "HRV"]
+dependencies = [
+    "biosppy",
+    "matplotlib",
+    "numpy",
+    "scipy",
+    "nolds",
+    "spectrum",
+]
+authors = [
+    { name = "Pedro Gomes", email = "pgomes92@gmail.com" }
+]
+
+maintainers = [
+    { name = "Pedro Gomes", email = "pgomes92@gmail.com" }
+]
+
+classifiers=[
+		"Intended Audience :: Developers",
+		"Intended Audience :: Education",
+		"Intended Audience :: Science/Research",
+		"Natural Language :: English",
+		"License :: OSI Approved :: BSD License",
+		"Programming Language :: Python",
+		"Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.9",
+		"Programming Language :: Python :: 3.10",
+		"Operating System :: OS Independent",
+]
+
+[project.optional-dependencies] # Optional
+dev = ["check-manifest"]
+test = ["coverage"]
+
+[project.urls]
+"Homepage" = "https://github.com/PGomes92/pyhrv"
+"Bug Reports" = "https://github.com/PGomes92/pyhrv/issues"
+"Source" = "https://github.com/PGomes92/pyhrv"
+
+[build-system]
+requires = ["setuptools>=43.0.0", "wheel"]
+build-backend = "setuptools.build_meta"

@@ -2,17 +2,17 @@ import sys
 import os
 import numpy as np
 import datetime as dt
-import pyhrv
-from pyhrv.report import hrv_report
+import _pyhrv
+from _pyhrv.report import hrv_report
 
 PRINTER = True
 
-nni_data = pyhrv.utils.load_sample_nni("long")
+nni_data = _pyhrv.utils.load_sample_nni("long")
 rpeaks_data = np.cumsum(nni_data)
 
 tfile = open('pyhrv_test_report_python_%s-%s-%s.txt' % sys.version_info[:3], 'w')
 
-print(pyhrv.__version__)
+print(_pyhrv.__version__)
 
 
 def output(info, output=''):
@@ -58,7 +58,7 @@ def test_func(f, nni=True):
 						raise TypeError(e)
 
 
-pyhrv_funcs = pyhrv.utils.load_hrv_keys_json()
+pyhrv_funcs = _pyhrv.utils.load_hrv_keys_json()
 
 
 def test_module(funcs):
@@ -83,68 +83,68 @@ def test_module(funcs):
 #######################
 output_seperator()
 output('Python', 'Version %s' % sys.version)
-output('pyHRV', 'Version %s' % pyhrv.__version__)
+output('pyHRV', 'Version %s' % _pyhrv.__version__)
 output('Date', dt.datetime.now())
 
 #####################
 # TIME DOMAIN TESTS #
 #####################
 output_header('Time Domain')
-time_funcs = set([x[-1] for x in pyhrv.utils.load_hrv_keys_json().values() if x[0] == 'time'])
+time_funcs = set([x[-1] for x in _pyhrv.utils.load_hrv_keys_json().values() if x[0] == 'time'])
 test_module(time_funcs)
-test_module(["pyhrv.time_domain.time_domain"])
+test_module(["_pyhrv.time_domain.time_domain"])
 
 ##########################
 # FREQUENCY DOMAIN TESTS #
 ##########################
 output_header('Frequency Domain')
-frequency_funcs = set([x[-1] for x in pyhrv.utils.load_hrv_keys_json().values() if 'frequency' in x[-1]])
+frequency_funcs = set([x[-1] for x in _pyhrv.utils.load_hrv_keys_json().values() if 'frequency' in x[-1]])
 test_module(frequency_funcs)
-test_module(["pyhrv.frequency_domain.frequency_domain"])
+test_module(["_pyhrv.frequency_domain.frequency_domain"])
 
 
 ##########################
 # NONLINEAR DOMAIN TESTS #
 ##########################
 output_header('Nonlinear Parameters')
-nonlinear_funcs = set([x[-1] for x in pyhrv.utils.load_hrv_keys_json().values() if 'nonlinear' in x[-1]])
+nonlinear_funcs = set([x[-1] for x in _pyhrv.utils.load_hrv_keys_json().values() if 'nonlinear' in x[-1]])
 test_module(nonlinear_funcs)
-test_module(["pyhrv.nonlinear.nonlinear"])
+test_module(["_pyhrv.nonlinear.nonlinear"])
 
 ######################
 # HRV FUNCTION TESTS #
 ######################
 output_header('HRV Function')
-test_module(["pyhrv.hrv"])
+test_module(["_pyhrv.hrv"])
 
 ###############
 # HRV Reports #
 ###############
 output_header('Testing HRV TXT & CSV Reports')
-results = pyhrv.hrv(nni_data, show=False)
+results = _pyhrv.hrv(nni_data, show=False)
 for ftype in ['txt', 'csv']:
 	try:
 		hrv_report(results, path=os.getcwd(), rfile='SampleReport', file_format=ftype)
-		output_success('pyhrv.report.hrv_report() %s report' % ftype, 'NNI')
+		output_success('_pyhrv.report.hrv_report() %s report' % ftype, 'NNI')
 	except Exception as e:
-		output_error('pyhrv.report.hrv_report() %s report' % ftype, e, 'NNI')
+		output_error('_pyhrv.report.hrv_report() %s report' % ftype, e, 'NNI')
 
 
 #########
 # TOOLS #
 #########
 output_header('Testing functions of the tools module')
-tools1 = ['pyhrv.tools.%s' % x for x in ['tachogram', 'heart_rate', 'heart_rate_heatplot', 'time_varying']]
+tools1 = ['_pyhrv.tools.%s' % x for x in ['tachogram', 'heart_rate', 'heart_rate_heatplot', 'time_varying']]
 test_module(tools1)
 
 try:
-	pyhrv.tools.radar_chart(nni=nni_data, comparison_nni=nni_data, parameters=['sdnn', 'sdnn'], show=False)
-	output_success('pyhrv.tools.radar_chart', 'NNI')
+	_pyhrv.tools.radar_chart(nni=nni_data, comparison_nni=nni_data, parameters=['sdnn', 'sdnn'], show=False)
+	output_success('_pyhrv.tools.radar_chart', 'NNI')
 except Exception as e:
-	output_error('pyhrv.tools.radar_chart', e, 'NNI')
+	output_error('_pyhrv.tools.radar_chart', e, 'NNI')
 
 try:
-	pyhrv.tools.radar_chart(rpeaks=nni_data, comparison_rpeaks=nni_data, parameters=['sdnn', 'sdnn'], show=False)
-	output_success('pyhrv.tools.radar_chart', 'NNI')
+	_pyhrv.tools.radar_chart(rpeaks=nni_data, comparison_rpeaks=nni_data, parameters=['sdnn', 'sdnn'], show=False)
+	output_success('_pyhrv.tools.radar_chart', 'NNI')
 except Exception as e:
-	output_error('pyhrv.tools.radar_chart', e, 'NNI')
+	output_error('_pyhrv.tools.radar_chart', e, 'NNI')

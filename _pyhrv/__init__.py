@@ -31,9 +31,9 @@ Last Update
 """
 
 # Local imports
-from pyhrv.__version__ import __version__
+from _pyhrv.__version__ import __version__
 
-from pyhrv.hrv import hrv
+from _pyhrv.hrv import hrv
 
 # Metadata
 __author__ = "Pedro Gomes"
@@ -41,5 +41,5 @@ __email__ = "pgomes92@gmail.com"
 __maintainer__ = "Pedro Gomes"
 __status__ = "Development"
 __license__ = "BSD 3-Clause License"
-name = "pyhrv"
+name = "_pyhrv"
 description = "Python toolbox for Heart Rate Variability."

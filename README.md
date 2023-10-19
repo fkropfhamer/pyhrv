@@ -34,7 +34,7 @@ Detailed pyHRV documentation is available on ReadTheDocs:
 
 Additional tutorials can be found here:
 
-- [pyHRV Quickstart Guide](./pyhrv/README.md)
+- [pyHRV Quickstart Guide](_pyhrv/README.md)
 
 - [Tutorial: From ECG acquisition to HRV analysis with pyHRV](https://pyhrv.readthedocs.io/en/latest/_pages/tutorials/bitalino.html)
 
@@ -42,7 +42,7 @@ Additional tutorials can be found here:
 
 ### Scientific Background
 The HRV algorithms have been developed and implemented according to the [Heart Rate Variability - Sandards of 
-Measurement, Physiological Interpretation, and Clinical Use Guidelines](https://www.ahajournals.org/doi/full/10.1161/01.CIR.93.5.1043). Other references are noted in the code and in the [pyHRV references](./pyhrv/files/references.txt).
+Measurement, Physiological Interpretation, and Clinical Use Guidelines](https://www.ahajournals.org/doi/full/10.1161/01.CIR.93.5.1043). Other references are noted in the code and in the [pyHRV references](_pyhrv/files/references.txt).
 
 ### Citing pyHRV
 Please use the following conference paper to cite pyHRV in your work ([Conference Paper [PDF]](https://drive.google.com/open?id=1enItjdVXkTYX_h2DkgDl2v8vXAe09QJv), [Conference Proceedings [PDF]](https://etran.rs/2019/Proceedings_IcETRAN_ETRAN_2019.pdf)):
@@ -146,7 +146,7 @@ Computes the following Nonlinear Parameters and the respective plots:
 - Heart Rate Heatplot, a visualization & classification of HR performance based on normal HR ranges by age and gender- ```pyhrv.tools.heart_rate_heatplot()```
 - Time varying plot of a HRV parameter over time - ```pyhrv.tools.time_varying()```
 - Dynamic Radar chart of HRV parameters - ```pyhrv.tools.radar_chart()```
-- Exporting HRV results into a JSON file [Sample File](./pyhrv/files/SampleExport.json)- ```pyhrv.tools.hrv_export()``` 
+- Exporting HRV results into a JSON file [Sample File](_pyhrv/files/SampleExport.json)- ```pyhrv.tools.hrv_export()``` 
 
 ![Image](./SampleFigures/SampleECG.png)
 ![Image](./SampleFigures/SampleTachogram.png)
@@ -155,17 +155,17 @@ Computes the following Nonlinear Parameters and the respective plots:
 ![Image](./SampleFigures/SampleRadarChart8.png)
 
 ## HRV Reports
-Generate HRV reports in .TXT, .CSV, and .PDF format (new in v.0.4!). Read the [README](./pyhrv/report/README.md) file of the pyHRV report submodule for more information about how to generate pyHRV reports as the following:
+Generate HRV reports in .TXT, .CSV, and .PDF format (new in v.0.4!). Read the [README](_pyhrv/report/README.md) file of the pyHRV report submodule for more information about how to generate pyHRV reports as the following:
 
-- [pyHRV .TXT report](./pyhrv/files/SampleReport.txt)
-- [pyHRV .CSV report](./pyhrv/files/SampleReport.csv)
-- [pyHRV .PDF report](./pyhrv/files/SampleReport.pdf)
+- [pyHRV .TXT report](_pyhrv/files/SampleReport.txt)
+- [pyHRV .CSV report](_pyhrv/files/SampleReport.csv)
+- [pyHRV .PDF report](_pyhrv/files/SampleReport.pdf)
 
 
 ## Utilities
 Several non-HRV specific utilities and general purpose functions which are used throughout this toolbox:
 - Loading NNI sample series for testing purposes - ```pyhrv.utils.load_sample_nni()```
-- Loading pyHRV's [hrv_keys.json](./pyhrv/files/hrv_keys.json) file - ```pyhrv.utils.load_hrv_keys_json()```
+- Loading pyHRV's [hrv_keys.json](_pyhrv/files/hrv_keys.json) file - ```pyhrv.utils.load_hrv_keys_json()```
 - Format NNI series (ensure numpy array and convert data provided in seconds to ms - ```pyhrv.utils.nn_format()```
 - Segmentation of time series (e.g. NNI series) - ```pyhrv.utils.segmentation()```
 - and others...

@@ -1,7 +1,7 @@
 # HRV SETUP SCRIPT
 
 import setuptools
-from pyhrv import __author__, __version__, __email__, name, description
+from _pyhrv import __author__, __version__, __email__, name, description
 # import matplotlib
 # matplotlib.use('TkAgg')
 with open("README.md", "r") as fh:
@@ -38,7 +38,7 @@ setuptools.setup(
 
 	packages=setuptools.find_packages(),
 	package_data={
-		"pyhrv": ["files/*", "README.md", "references.txt", "files/quickstart/*"]},
+		"_pyhrv": ["files/*", "README.md", "references.txt", "files/quickstart/*"]},
 	include_package_data=True,
 	classifiers=[
 		'Intended Audience :: Developers',

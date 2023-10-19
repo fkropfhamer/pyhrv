@@ -156,7 +156,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'pyhrv-opensourcepythontoolboxforheartratevariability', u'pyHRV - OpenSource Python Toolbox for Heart Rate Variability Documentation',
+    (master_doc, '_pyhrv-opensourcepythontoolboxforheartratevariability', u'pyHRV - OpenSource Python Toolbox for Heart Rate Variability Documentation',
      [author], 1)
 ]
 

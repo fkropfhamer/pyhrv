@@ -126,17 +126,19 @@ The tools module contains a selection of functions to compute fundamental data s
 
 ## 2.2. Quickstart <a name="tools_quick"></a>
 In order to use this module, it is recommended to import it as follows:
+
 ```python
-import pyhrv.tools as tools
+import _pyhrv.tools as tools
 ```
 
 ### 2.2.1 Load ECG, Extract R-peaks and Compute NNI <a name="tools_quick_stat"></a>
 The example below demonstrates how to load an ECG signal (here the [BITalino](www.bitalino.com) sample ECG signal), extract the R-peak locations and compute the NNI series.
+
 ```python
 import biosppy
 import numpy as np
-import pyhrv.tools as tools
-from opensignalsreader import OpenSignalsReader 
+import _pyhrv.tools as tools
+from opensignalsreader import OpenSignalsReader
 
 # Load sample ECG signal & extract R-peaks using BioSppy
 signal = OpenSignalsReader('./samples/SampleECG.txt').signal('ECG')
@@ -219,8 +221,9 @@ Additionally, this module contains the module level `time_domain()` function whi
 
 ## 3.2 Quickstart <a name="time_quick"></a>
 In order to use this module, it is recommended to import it as follows:
+
 ```python
-import pyhrv.time_domain as td
+import _pyhrv.time_domain as td
 ```
 
 ### 3.2.1 Compute Individual Time Domain Parameters <a name="time_quick_parameter"></a>
@@ -229,11 +232,11 @@ The functions of the `time_domain.py` module can be used as shown on the example
 ```python
 # Import packages
 import numpy as np
-import pyhrv
-import pyhrv.time_domain as td 
+import _pyhrv
+import _pyhrv.time_domain as td
 
 # Load NNI sample series
-nni = pyhrv.utils.load_sample_nni()
+nni = _pyhrv.utils.load_sample_nni()
 
 # Compute SDNN
 result = td.sdnn(nni)
@@ -248,11 +251,11 @@ Instead of calling each parameter function individually you can use the module l
 ```python
 # Import packages
 import numpy as np
-import pyhrv
-import pyhrv.time_domain as td 
+import _pyhrv
+import _pyhrv.time_domain as td
 
 # Load NNI sample series
-nni = pyhrv.utils.load_sample_nni()
+nni = _pyhrv.utils.load_sample_nni()
 
 # Compute SDNN
 results = td.time_domain(nni)
@@ -292,8 +295,9 @@ Additionally, this module contains the module level `frequency_domain()` functio
 
 ## 4.2 Quickstart <a name="freq_quick"></a>
 In order to use this module, it is recommended to import it as follows:
+
 ```python
-import pyhrv.frequency_domain as fd
+import _pyhrv.frequency_domain as fd
 ```
 
 ### 4.2.1. Welch's Method <a name="freq_welch"></a>
@@ -308,11 +312,11 @@ The default frequency bands are specified as follows:
 ```python
 # Import packages
 import numpy as np
-import pyhrv
-import pyhrv.frequency_domain as fd
+import _pyhrv
+import _pyhrv.frequency_domain as fd
 
 # Load NNI sample series
-nni = pyhrv.utils.load_sample_nni()
+nni = _pyhrv.utils.load_sample_nni()
 
 # Compute the PSD and frequency domain parameters
 result = fd.welch_psd(nni=nni)
@@ -347,11 +351,11 @@ The default frequency bands are specified as follows:
 ```python
 # Import packages
 import numpy as np
-import pyhrv
-import pyhrv.frequency_domain as fd
+import _pyhrv
+import _pyhrv.frequency_domain as fd
 
 # Load NNI sample series
-nni = pyhrv.utils.load_sample_nni()
+nni = _pyhrv.utils.load_sample_nni()
 
 # Compute the PSD and frequency domain parameters
 result = fd.lomb_psd(nni=nni)
@@ -385,11 +389,11 @@ The default frequency bands are specified as follows:
 ```python
 # Import packages
 import numpy as np
-import pyhrv
-import pyhrv.frequency_domain as fd
+import _pyhrv
+import _pyhrv.frequency_domain as fd
 
 # Load NNI sample series
-nni = pyhrv.utils.load_sample_nni()
+nni = _pyhrv.utils.load_sample_nni()
 
 # Compute the PSD and frequency domain parameters
 result = fd.ar_psd(nni=nni)
@@ -417,11 +421,11 @@ Instead of calling each method function individually you can use the module leve
 ```python
 # Import packages
 import numpy as np
-import pyhrv
-import pyhrv.frequency_domain as fd 
+import _pyhrv
+import _pyhrv.frequency_domain as fd
 
 # Load NNI sample series
-nni = pyhrv.utils.load_sample_nni()
+nni = _pyhrv.utils.load_sample_nni()
 
 # Compute frequency 
 results = fd.frequency_domain(nni=nni)
@@ -437,20 +441,20 @@ You can still define  specific parameters for the individual methods when using 
 ```python
 # Import packages
 import numpy as np
-import pyhrv
-import pyhrv.frequency_domain as fd 
+import _pyhrv
+import _pyhrv.frequency_domain as fd
 
 # Load NNI sample series
-nni = pyhrv.utils.load_sample_nni()
+nni = _pyhrv.utils.load_sample_nni()
 
 # Welch parameter(s)
-kwargs_welch = {'nfft': 2**12}
+kwargs_welch = {'nfft': 2 ** 12}
 
 # AR parameter(s)
-kwargs_ar = {'nfft': 2**10}
+kwargs_ar = {'nfft': 2 ** 10}
 
 # Lomb parameter(s)
-kwargs_lomb= {'nfft': 2**8}
+kwargs_lomb = {'nfft': 2 ** 8}
 
 # Compute frequency 
 results = fd.frequency_domain(nni=nni, kwargs_welch=kwargs_lomb, kwargs_ar=kwargs_ar, kwargs_lomb=kwargs_lomb)
@@ -475,20 +479,22 @@ Additionally, this module contains the module level `nonlinear()` function which
 
 ## 5.2 Quickstart <a name="nonlinear_quick"></a>
 In order to use this module, it is recommended to import it as follows:
+
 ```python
-import pyhrv.nonlinear as nl
+import _pyhrv.nonlinear as nl
 ```
 
 ### 5.2.1 Compute Individual Nonlinear Parameters <a name="nonlinear_quick_parameter"></a>
 The functions of the `nonlinear.py` module can be used as shown on the example below:
+
 ```python
 # Import packages
 import numpy as np
-import pyhrv
-import pyhrv.nonlinear as nl
+import _pyhrv
+import _pyhrv.nonlinear as nl
 
 # Load NNI sample series
-nni = pyhrv.utils.load_sample_nni()
+nni = _pyhrv.utils.load_sample_nni()
 
 # Compute SDNN
 result = nl.poincare(nni)
@@ -502,14 +508,15 @@ Note that the `poincare()` function generates the [Poincaré scatter plot](https
 ![Image](./files/quickstart/poincare.png)
 
 For the Detrended Fluctuatio Analysis (DFA) set the defined short-term and long-term intervals to compute the DFAs.
+
 ```python
 # Import packages
 import numpy as np
-import pyhrv
-import pyhrv.nonlinear as nl
+import _pyhrv
+import _pyhrv.nonlinear as nl
 
 # Load NNI sample series
-nni = pyhrv.utils.load_sample_nni()
+nni = _pyhrv.utils.load_sample_nni()
 
 # Compute SDNN
 result = nl.dfa(nni, short=[4, 16], long=[17, 64])
@@ -527,11 +534,11 @@ Instead of calling each parameter function individually you can use the module l
 ```python
 # Import packages
 import numpy as np
-import pyhrv
-import pyhrv.nonlinear as nl 
+import _pyhrv
+import _pyhrv.nonlinear as nl
 
 # Load NNI sample series
-nni = pyhrv.utils.load_sample_nni()
+nni = _pyhrv.utils.load_sample_nni()
 
 # Compute all nonlinear parameters
 results = nl.nonlinear(nni)

@@ -45,11 +45,11 @@ from matplotlib.projections.polar import PolarAxes
 
 # BioSPPy import
 import biosppy
-import pyhrv 
+import _pyhrv
 
 
 def load_sample_nni(series='short'):
-	"""Returns a short-term (5min) or long-term (60min) series of sample NNI found in the pyhrv/files/ directory.
+	"""Returns a short-term (5min) or long-term (60min) series of sample NNI found in the _pyhrv/files/ directory.
 
 	Docs:	
 	
@@ -83,12 +83,12 @@ def load_sample_nni(series='short'):
 
 
 def load_hrv_keys_json():
-	"""Loads the content of the 'hrv_keys.json' file found in the 'pyhrv/files/' directory.
+	"""Loads the content of the 'hrv_keys.json' file found in the '_pyhrv/files/' directory.
 
 	Returns
 	-------
 	hrv_keys : dict
-		Content of the pyhrv/files/hrv_keys.json file in a dictionary
+		Content of the _pyhrv/files/hrv_keys.json file in a dictionary
 	"""
 	return json.load(open(os.path.join(os.path.split(__file__)[0], './files/hrv_keys.json'), 'r'))
 
@@ -120,7 +120,7 @@ def check_input(nni=None, rpeaks=None):
 	# Check input
 	if nni is None and rpeaks is not None:
 		# Compute NN intervals if r_peaks array is given
-		nni = pyhrv.tools.nn_intervals(rpeaks)
+		nni = _pyhrv.tools.nn_intervals(rpeaks)
 	elif nni is not None:
 		# Use given NN intervals & confirm numpy
 		nni = nn_format(nni)
