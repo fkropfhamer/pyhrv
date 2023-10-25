@@ -1,12 +1,16 @@
 from unittest import TestCase
+import numpy as np
 
-from pyhrv.detrend import detrend_moving_avg, detrend_advanced
+from pyhrv.detrend import moving_avg, smoothness_priors
 
 
 class Test(TestCase):
-    def test_detrend_moving_avg(self):
-        r = detrend_moving_avg()
-        assert r
+    def test_detrend_moving_avg_with_ones(self):
+        r = moving_avg(np.ones(100))
 
-    def test_detrend_advanced(self):
-        assert detrend_advanced() == 1
+        assert np.isclose(r, np.ones(100)).all()
+
+    def test_detrend_smoothness_priors_with_ones(self):
+        r = smoothness_priors(np.ones(100))
+
+        assert np.isclose(r, np.zeros(100)).all()
