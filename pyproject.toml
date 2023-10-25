@@ -36,8 +36,8 @@ classifiers=[
 ]
 
 [project.optional-dependencies] # Optional
-dev = ["check-manifest"]
-test = ["coverage"]
+dev = ["check-manifest", "tox", "pytest"]
+test = ["coverage", "pytest"]
 
 [project.urls]
 "Homepage" = "https://github.com/PGomes92/pyhrv"
